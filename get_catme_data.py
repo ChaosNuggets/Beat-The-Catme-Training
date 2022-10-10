@@ -52,10 +52,11 @@ from typing import List, Tuple
 NUMBER_OF_QUESTIONS = 5
 
 # The 1st dimension of the list are the different questions.
-# The 2nd dimension[0] are the sentences that affect that question.
-# The 3rd dimension[1] are the sum of all the ratings based on that sentence.
-# The 4th dimension[2] are the number of times that question has showed up.
-results = [[]] * NUMBER_OF_QUESTIONS
+# The keys are the sentences that affect that question.
+# The values[0] are the sum of all the ratings based on that sentence.
+# The values[1] are the number of times that question has showed up.
+results = [{}] * NUMBER_OF_QUESTIONS
+
 
 def main():
     # Using Chrome to access web
@@ -70,12 +71,12 @@ def main():
     
     # print(results)
 
-    # # print the results
-    # for question in results:
-    #     for key in question:
-    #         print(key, end=' ')
-    #         print(question[key])
-    #     print()
+    # print the results
+    for question in results:
+        for key in question:
+            print(key, end=' ')
+            print(question[key])
+        print()
     
     time.sleep(10000)
 
@@ -141,20 +142,21 @@ def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
     return reasons_list, rating
 
 def record_reasons_and_rating(question: int, reasons_list: List[str], rating: int) -> None:
+    # copy the corresponding dictionary (I hate that I have to do this stupidity)
+    question_results = results[question].copy()
+
     # iterate through each reason in reasons
     for reason in reasons_list:
-        reason_in_results = False
 
         # add the reason to the results dictionary
-        for i in range(len(results[question])):
-            if reason == results[question][i][0]:
-                results[question][i][1] += rating
-                results[question][i][2] += 1
-                reason_in_results = True
-                break
-        
-        if reason_in_results == False:
-            results[question].append([reason, rating, 1])
+        if reason in question_results:
+            question_results[reason][0] += rating
+            question_results[reason][1] += 1
+        else:
+            question_results[reason] = [rating, 1]
+    
+    # add the changed dictionary back into results
+    results[question] = question_results
 
 def go_to_next_question(driver) -> None:
     # find and click the next button
