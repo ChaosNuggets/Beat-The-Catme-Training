@@ -1,0 +1,110 @@
+Question Number,Reason,Sum,Frequency
+0,"Shows up late, if at all, to team meetings",40,22
+0,"Turns in acceptable, but not outstanding, work",92,32
+0,"Routinely late to team meetings",21,11
+0,"Does fair share of the work, but generally not above and beyond the fair share",114,38
+0,"Completes any math required as part of the team's assignments",125,40
+0,"Never reads the material prior to meeting",30,16
+0,"Does more work than what is needed",45,11
+0,"Completes all assigned tasks on time",128,41
+0,"Performs more effectively than any other team member",77,19
+0,"Effectively completes tasks, no matter what",40,10
+0,"Does an equal share of the work",123,36
+0,"Sits idly in team meetings",60,30
+0,"Performs a significant amount of work on assignments",60,15
+0,"Identifies solutions for issues that no one else is able to address",68,17
+0,"Comes up with important ideas during team brainstorming",61,15
+0,"Always volunteers to perform additional work as needed",44,11
+0,"Frequently misses team meetings",39,20
+0,"Provides valuable input for accomplishing team assignments",20,5
+0,"Consistently meets the expectations of the assignment",98,30
+0,"Generates new ideas to improve the team's assignment that the rest of the team had not thought of",69,17
+0,"Adds input to the team assignments",90,28
+0,"Completes the tasks needed",130,41
+0,"Submits work that fails to meet the task requirements explicitly stated by the team",6,3
+0,"Adds ideas to projects that make the work better",68,17
+0,"Adds little, if anything, to team assignments",19,10
+0,"Always offers ideas about how to complete tasks, no matter what the task is",33,8
+0,"Engages in little taskwork if not pushed by others",22,11
+0,"Generates ideas that help the team",44,11
+0,"Fails to complete personal taskwork required for the team's assignment",8,4
+0,"Puts in more effort than any other member of the team",36,9
+1,"Listens to everyone's opinions",141,44
+1,"Cheers on teammates",88,22
+1,"Listens to everyone",176,53
+1,"Displays a negative attitude towards anything that the team does",18,10
+1,"Is often combative when own ideas are not adopted",55,29
+1,"Respects other team members' opinions",147,47
+1,"Often encourages teammates' thoughts and opinions",60,15
+1,"Shares ideas openly with fellow team members",153,48
+1,"Asks everyone to contribute ideas so everyone's voice is heard during team meetings",93,23
+1,"Actively listens to others' opinions and ideas of how things should be done",168,57
+1,"Involves everyone in discussions",85,21
+1,"Displays nonverbal signs of frustration, disinterest, or contempt towards working with others on the team",24,14
+1,"Boosts team morale by complimenting members on their work",99,24
+1,"Often argues with other teammates",41,21
+1,"Ignores other team members' ideas and opinions",4,4
+1,"Redirects negative comments of other team members to keep things positive",129,32
+1,"Communicates well with the other team members",76,19
+1,"Seeks input from team members that haven't voiced ideas yet",92,23
+1,"Frequently absent",23,12
+1,"Fails to give status reports to other team members",31,16
+1,"Closed-minded regarding others' ideas",4,4
+1,"Stubbornly disagrees with the team's decisions if not aligned with own ideas",11,7
+1,"Disregards abstract and creative ideas from other team members",9,6
+2,"Reminds team of deadlines to help encourage the completion of tasks",125,34
+2,"Sets internal deadlines to push the team to complete goals effectively",67,16
+2,"Identifies weaknesses in the team's developments",157,51
+2,"Rarely checks on progress of other team members",17,10
+2,"Does not mention problems right away, but later comments about having noticed those issues",40,20
+2,"Ensures that things get done by asking if each member understands the tasks that they need to accomplish",167,51
+2,"Creates goals to help the team monitor its progress",56,14
+2,"Records team progress and tasks remaining",151,45
+2,"Provides irrelevant information that further confuses the team when the team is attempting to overcome a problem",36,18
+2,"Encourages the team members to stay on the tasks",160,50
+2,"Distracts the other team members by talking about topics that have nothing to do with the task",40,21
+2,"Appropriately assigns roles to team members to get the most productivity out of everyone",64,16
+2,"Writes checklists that keep the team focused",60,15
+2,"Helps the team think of issues that have been overlooked",168,51
+2,"Organizes team meetings",85,21
+2,"Writes down a checklist of what the team needs to get done for meetings",72,18
+2,"Does not give feedback on a problem unless someone else addresses a concern first",33,18
+2,"Finds a way to get the team back on track regardless of what else is occurring",60,15
+2,"Takes the initiative to make sure everyone makes it to the meetings and gets their work done",36,9
+2,"Keeps track of deadlines and holds team members to those deadlines to ensure the project is completed in the time allotted",44,11
+2,"Does not follow up with team members about tasking to ensure understanding",37,19
+2,"Gives constructive feedback",73,18
+2,"Sets goals and checkpoints to help the team",69,17
+2,"Often coordinates meetings when others forget",75,18
+3,"Usually reads and double-checks the work before submitting it",146,46
+3,"Reviews all work before submitting it to the team to ensure it is of top quality",116,29
+3,"Encourages team to check work for errors",195,62
+3,"Often makes statements implying the team will fail the assignment",129,70
+3,"Talks about the need to get good grades by turning in quality work",169,56
+3,"Checks work to ensure it is generally correct",150,49
+3,"Questions things to ensure that processes are the best they can be",153,38
+3,"Invests time to ensure the team is doing the job well",171,51
+3,"Encourages the team to do better than it normally would",88,22
+3,"Finishes work as quickly as possible without regard for whether it is done correctly",53,29
+3,"Encourages the team to achieve its highest potential",91,22
+3,"Makes statements indicating a greater concern for just getting done rather than ensuring a quality job",36,22
+3,"Communicates high expectations with regard to the quality of assignments",121,30
+3,"Shows little concern about the team's performance on assignments",3,3
+3,"Ignores errors in the work and suggests that it is ok to submit as is without fixing errors",4,4
+4,"Figures out how to do the math for assigned problems",143,40
+4,"Relies upon an excellent knowledge base that greatly assists in solving the team's problems",133,33
+4,"Completes the required mathematical operations due to having the expected mathematical skills for this course",135,41
+4,"Relies on extensive computer skills to complete team assignments",151,37
+4,"Applies previously gained programming knowledge to complete tasks",174,50
+4,"Able to use base knowledge of computers in some assignments",155,44
+4,"Uses relevant math skills",80,24
+4,"Accomplishes tasks quickly by using extensive knowledge base",137,34
+4,"Uses computer skills to help solve some problems",157,45
+4,"Demonstrates outstanding mathematics skills",85,21
+4,"Shows skills in areas where the rest of the team does not have them",137,34
+4,"Able to contribute to all assignments because of an unusually strong understanding of the required mathematical knowledge and skills",102,25
+4,"Learned computer skills required for the assignment so the team could complete the task",97,24
+4,"Applies previous knowledge of computer programs to tasks",143,39
+4,"Expresses frustration when trying to complete tasks that require task-specific knowledge and skills",62,32
+4,"Does not try to learn the skills needed to complete the task",54,28
+4,"Unable to complete basic tasks because he/she is struggling to understand the material",11,7

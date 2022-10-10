@@ -42,14 +42,14 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Import time for pausing
-import time
-
 # Import list for type hinting
 from typing import List, Tuple
 
 # The number of questions the catme asks
 NUMBER_OF_QUESTIONS = 5
+
+# Seconds to wait before trying to locate an element again
+TRY_AGAIN_TIME = 5
 
 # The 1st dimension of the list are the different questions.
 # The keys are the sentences that affect that question.
@@ -57,69 +57,113 @@ NUMBER_OF_QUESTIONS = 5
 # The values[1] are the number of times that question has showed up.
 results = [{}] * NUMBER_OF_QUESTIONS
 
+# The number of failed tests
+failed_tests = 0
+
+# Whether or not the current test has failed
+current_test_failed = False
+
 def main():
-    TIMES_TO_RUN = 2
+    TIMES_TO_RUN = 1000
 
     # Using Chrome to access web
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
     for i in range(TIMES_TO_RUN):
+        current_test_failed = False
+        print(f'running: {i + 1} / {TIMES_TO_RUN}')
         get_results(driver)
 
     write_results()
 
+    print(f'done! ({failed_tests} / {TIMES_TO_RUN} tests failed)')
+
 def get_results(driver) -> None:
+    global current_test_failed
+    if current_test_failed: return
     navigate_to_questions(driver)
+
+    # Fill out each of the questions
     for i in range(NUMBER_OF_QUESTIONS):
         fill_out_questions(driver)
-        find_reasons_and_rating(driver, i)
         go_to_next_question(driver)
+    
+    # Get the results
+    for i in range(NUMBER_OF_QUESTIONS):
+        find_reasons_and_rating(driver, i)
 
 def navigate_to_questions(driver) -> None:
+    global current_test_failed
+    if current_test_failed: return
     # Open the website
     driver.get('https://www.catme.org/login/survey_demo_team')
 
     # Find and click on list of courses
-    complete_activity_button = driver.find_element('name', 'action')
+    complete_activity_button = find_element(driver, 'name', 'action')
+    if current_test_failed: return
 
     complete_activity_button.click()
 
 def fill_out_questions(driver) -> None:
+    global current_test_failed
+    if current_test_failed: return
     # Find and click a rating for each person
-    person_1_button = driver.find_element('name', 'person0')
-    person_2_button = driver.find_element('name', 'person1')
-    person_3_button = driver.find_element('name', 'person2')
+    person_1_button = find_element(driver, 'name', 'person0')
+    person_2_button = find_element(driver, 'name', 'person1')
+    person_3_button = find_element(driver, 'name', 'person2')
+    if current_test_failed: return
 
     person_1_button.click()
     person_2_button.click()
     person_3_button.click()
 
-    # Find and click the reveal answers button
-    reveal_answers_button = driver.find_element(By.XPATH, '//form[2]/section/table/tbody/tr/td[2]/input')
-
-    reveal_answers_button.click()
-
 def find_reasons_and_rating(driver, question: int) -> None:
+    global current_test_failed, failed_tests
+    if current_test_failed: return
     # the number of rows that we can choose
     NUMBER_OF_ROWS = 5
 
+    # the people we still haven't found the correct answer for yet
+    not_found_yet = [0, 1, 2]
+
     # iterate through each row
     for i in range(NUMBER_OF_ROWS):
+        # create a temporary not_found_yet because removing elements from the actual not_found_yet
+        # list while still in the for loop will cause weird stuff to happen
+        temp_not_found_yet = not_found_yet.copy()
 
         # get the row
-        row = driver.find_element(By.XPATH, f'//form[2]/section/div/table/tbody/tr[{i+5}]')
+        row = find_element(driver, By.XPATH, f'//section/div/table[{question + 1}]/tbody/tr[{i+5}]')
+        if current_test_failed: return
 
         # test if that row was the correct answer for any of them
-        for j in range(3):
+        for j in not_found_yet:
+            
+            # test if the correct answer is in that row
             try:
                 reasons = row.find_element('id', f'info{j}{question + 1}').get_attribute('textContent')
             except NoSuchElementException:
                 continue
 
+            # do these if the correct answer is in that row
+            temp_not_found_yet.remove(j)
             reasons_list, rating = get_reasons_and_rating(reasons, i)
             record_reasons_and_rating(question, reasons_list, rating)
+        
+        # make the changes
+        not_found_yet = temp_not_found_yet.copy()
+
+        # if we've found everything (the not_found_yet list is empty), then we can return
+        if not not_found_yet:
+            return
+    
+    print("couldn't find correct answer, moving on to next test")
+    failed_tests += 1
+    current_test_failed = True
 
 def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
+    global current_test_failed
+    if current_test_failed: return
     # calculate the rating based on the current row
     rating = 5 - row_num
 
@@ -137,6 +181,8 @@ def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
     return reasons_list, rating
 
 def record_reasons_and_rating(question: int, reasons_list: List[str], rating: int) -> None:
+    global current_test_failed
+    if current_test_failed: return
     # copy the corresponding dictionary (I hate that I have to do this stupidity)
     question_results = results[question].copy()
 
@@ -154,10 +200,24 @@ def record_reasons_and_rating(question: int, reasons_list: List[str], rating: in
     results[question] = question_results
 
 def go_to_next_question(driver) -> None:
+    global current_test_failed
+    if current_test_failed: return
     # find and click the next button
-    next_button = driver.find_element(By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
+    next_button = find_element(driver, By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
+    if current_test_failed: return
 
     next_button.click()
+
+def find_element(driver, find_method, method_value: str):
+    global current_test_failed, failed_tests
+    if current_test_failed: return
+    try:
+        return driver.find_element(find_method, method_value)
+    except NoSuchElementException:
+        # try again lmao
+        print('ran into NoSuchElementException, moving on to next test')
+        failed_tests += 1
+        current_test_failed = True
 
 def write_results() -> None:
     with open('results.csv', 'w') as file:
