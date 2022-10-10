@@ -57,28 +57,23 @@ NUMBER_OF_QUESTIONS = 5
 # The values[1] are the number of times that question has showed up.
 results = [{}] * NUMBER_OF_QUESTIONS
 
-
 def main():
+    TIMES_TO_RUN = 2
+
     # Using Chrome to access web
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
-    # Get the results
+    for i in range(TIMES_TO_RUN):
+        get_results(driver)
+
+    write_results()
+
+def get_results(driver) -> None:
     navigate_to_questions(driver)
     for i in range(NUMBER_OF_QUESTIONS):
         fill_out_questions(driver)
         find_reasons_and_rating(driver, i)
         go_to_next_question(driver)
-    
-    # print(results)
-
-    # print the results
-    for question in results:
-        for key in question:
-            print(key, end=' ')
-            print(question[key])
-        print()
-    
-    time.sleep(10000)
 
 def navigate_to_questions(driver) -> None:
     # Open the website
@@ -163,6 +158,16 @@ def go_to_next_question(driver) -> None:
     next_button = driver.find_element(By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
 
     next_button.click()
+
+def write_results() -> None:
+    with open('results.csv', 'w') as file:
+        file.write('Question Number,Reason,Sum,Frequency\n')
+        for i in range(len(results)):
+            for key in results[i]:
+                file.write(f'{i},')
+                file.write(f'"{key}",')
+                file.write(f'{results[i][key][0]},')
+                file.write(f'{results[i][key][1]}\n')
 
 if __name__ == '__main__':
     main()

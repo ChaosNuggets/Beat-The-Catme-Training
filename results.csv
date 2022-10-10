@@ -1,0 +1,42 @@
+Question Number,Reason,Sum,Frequency
+0,"Completes all assigned tasks on time",4,1
+0,"Always offers ideas about how to complete tasks, no matter what the task is",4,1
+0,"Effectively completes tasks, no matter what",4,1
+0,"Completes the tasks needed",4,1
+0,"Does fair share of the work, but generally not above and beyond the fair share",4,2
+0,"Routinely late to team meetings",2,1
+0,"Generates new ideas to improve the team's assignment that the rest of the team had not thought of",4,1
+0,"Turns in acceptable, but not outstanding, work",4,1
+0,"Sits idly in team meetings",2,1
+0,"Adds little, if anything, to team assignments",1,1
+1,"Communicates well with the other team members",4,1
+1,"Cheers on teammates",4,1
+1,"Often argues with other teammates",2,1
+1,"Listens to everyone's opinions",6,3
+1,"Is often combative when own ideas are not adopted",4,2
+1,"Asks everyone to contribute ideas so everyone's voice is heard during team meetings",5,1
+1,"Shares ideas openly with fellow team members",3,1
+2,"Writes checklists that keep the team focused",4,1
+2,"Records team progress and tasks remaining",4,1
+2,"Ensures that things get done by asking if each member understands the tasks that they need to accomplish",8,2
+2,"Appropriately assigns roles to team members to get the most productivity out of everyone",4,1
+2,"Does not follow up with team members about tasking to ensure understanding",2,1
+2,"Encourages the team members to stay on the tasks",6,2
+2,"Gives constructive feedback",4,1
+2,"Organizes team meetings",4,1
+2,"Identifies weaknesses in the team's developments",4,1
+2,"Sets goals and checkpoints to help the team",4,1
+3,"Questions things to ensure that processes are the best they can be",12,3
+3,"Checks work to ensure it is generally correct",8,2
+3,"Communicates high expectations with regard to the quality of assignments",8,2
+3,"Invests time to ensure the team is doing the job well",8,2
+3,"Usually reads and double-checks the work before submitting it",4,1
+3,"Ignores errors in the work and suggests that it is ok to submit as is without fixing errors",1,1
+4,"Relies upon an excellent knowledge base that greatly assists in solving the team's problems",9,2
+4,"Figures out how to do the math for assigned problems",4,1
+4,"Expresses frustration when trying to complete tasks that require task-specific knowledge and skills",2,1
+4,"Able to use base knowledge of computers in some assignments",2,1
+4,"Shows skills in areas where the rest of the team does not have them",4,1
+4,"Completes the required mathematical operations due to having the expected mathematical skills for this course",6,2
+4,"Applies previous knowledge of computer programs to tasks",3,1
+4,"Does not try to learn the skills needed to complete the task",2,1
