@@ -42,7 +42,7 @@ from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
-# Import list for type hinting
+# Import for type hinting
 from typing import List, Tuple
 
 # The number of questions the catme asks
@@ -64,6 +64,7 @@ failed_tests = 0
 current_test_failed = False
 
 def main():
+    global current_test_failed
     TIMES_TO_RUN = 1000
 
     # Using Chrome to access web

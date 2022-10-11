@@ -1,54 +1,8 @@
-"""
-===============================================================================
-ENGR 13300 Fall 2022
-
-Program Description
-    Prompts the user for the 3 descriptions and then generates the correct
-    answers for each of the questions
-
-Assignment Information
-    Assignment:     Individual project
-    Author:         Stanley So, sos@purdue.edu
-    Team ID:        LC4 - 12
-
-Contributor:    Name, login@purdue [repeat for each]
-    My contributor(s) helped me:
-    [ ] understand the assignment expectations without
-        telling me how they will approach it.
-    [ ] understand different ways to think about a solution
-        without helping me plan my solution.
-    [ ] think through the meaning of a specific error or
-        bug present in my code without looking at my code.
-    Note that if you helped somebody else with their code, you
-    have to list that person as a contributor here as well.
-    
-ACADEMIC INTEGRITY STATEMENT
-I have not used source code obtained from any other unauthorized
-source, either modified or unmodified. Neither have I provided
-access to my code to another. The project I am submitting
-is my own original work.
-===============================================================================
-"""
-
 # import for type hinting
 from typing import List, Dict, Tuple
 
 # import for reading csv file easier
 import csv
-
-def main():
-    # description_names = ['first', 'second', 'third']
-    description_names = ['first']
-
-    descriptions = []
-
-    # prompt the user for the descriptions
-    for name in description_names:
-        descriptions.append(input(f'Enter the {name} description:\n'))
-
-    answers = calculate_answers(descriptions)
-
-    print(answers)
 
 def calculate_answers(descriptions: Tuple[int]) -> Tuple[Tuple[int]]:
     NUMBER_OF_QUESTIONS = 5
@@ -58,7 +12,7 @@ def calculate_answers(descriptions: Tuple[int]) -> Tuple[Tuple[int]]:
     # calculate the answers for each of the descriptions
     for description in descriptions:
         description = format_description(description)
-        answers.append(calculate_paragraph_ratings(description, data, NUMBER_OF_QUESTIONS))
+        answers.append(calculate_paragraph_ratings(description, NUMBER_OF_QUESTIONS))
     
     # make it so then the tuple that we return is tuple[n][m], where n is the question and m is the person 
     return tuple(zip(*answers[::]))
@@ -115,7 +69,7 @@ def calculate_sentence_rating(summation: int, frequency: int) -> int:
         return 2
     return 1
 
-def calculate_paragraph_ratings(description: List[str], data: Dict[str, List[Tuple[int, int]]], NUMBER_OF_QUESTIONS: int) -> List[int]:
+def calculate_paragraph_ratings(description: List[str], NUMBER_OF_QUESTIONS: int) -> List[int]:
     # the answer for each question from 1-5
     paragraph_ratings = [0] * NUMBER_OF_QUESTIONS
     for sentence in description:
@@ -130,7 +84,6 @@ def calculate_paragraph_ratings(description: List[str], data: Dict[str, List[Tup
                 continue
             
             rating_sum = paragraph_ratings[question_num] + rating
-            print(rating_sum)
 
             # change the paragraph rating to the correct thing
             if 6 < rating_sum < 10:
