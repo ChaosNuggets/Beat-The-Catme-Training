@@ -36,24 +36,35 @@ from typing import List, Dict, Tuple
 # import for reading csv file easier
 import csv
 
-NUMBER_OF_QUESTIONS = 5
-
 def main():
-    DESCRIPTION_NAMES = ['first', 'second', 'third']
-
-    answers = []
+    description_names = ['first', 'second', 'third']
 
     data = interpret_data()
 
-    for i in range(len(DESCRIPTION_NAMES)):
-        description = get_descriptions(DESCRIPTION_NAMES[i])
-        answers.append(calculate_paragraph_ratings(description, data))
-    
+    descriptions = []
+
+    for name in description_names:
+        descriptions.append(input(f'Enter the {name} description:\n'))
+
+    answers = calculate_answers(descriptions, data)
+
     print(answers)
 
-def get_descriptions(description_num: str) -> List[str]:
+def calculate_answers(descriptions: Tuple[int], data: Dict[str, List[Tuple[int, int]]]) -> Tuple[Tuple[int]]:
+    NUMBER_OF_QUESTIONS = 5
+
+    answers = []
+
+    for description in descriptions:
+        description = format_description(description)
+        answers.append(calculate_paragraph_ratings(description, data, NUMBER_OF_QUESTIONS))
+    
+    # make it so then in answers[n][m], n is the question and m is the person 
+    return tuple(zip(*answers[::]))
+
+def format_description(description: str) -> List[str]:
     # split the description into sentences
-    description = input(f'Enter the {description_num} description:\n').strip('. ').lower().split('.')
+    description = description.strip('. ').lower().split('.')
 
     # remove unnecessary whitespace
     for i in range(len(description)):
@@ -103,9 +114,9 @@ def calculate_sentence_rating(summation: int, frequency: int) -> int:
         return 2
     return 1
 
-def calculate_paragraph_ratings(description: List[str], data: Dict[str, List[Tuple[int, int]]]) -> List[int]:
+def calculate_paragraph_ratings(description: List[str], data: Dict[str, List[Tuple[int, int]]], NUMBER_OF_QUESTIONS: int) -> List[int]:
     # the answer for each question from 1-5
-    paragraph_ratings = [0] * 5
+    paragraph_ratings = [0] * NUMBER_OF_QUESTIONS
     for sentence in description:
         if sentence not in data:
             raise RuntimeError(f'sentence: {sentence} could not found in the data')
