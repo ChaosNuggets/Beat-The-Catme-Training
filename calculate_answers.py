@@ -37,29 +37,30 @@ from typing import List, Dict, Tuple
 import csv
 
 def main():
-    description_names = ['first', 'second', 'third']
-
-    data = interpret_data()
+    # description_names = ['first', 'second', 'third']
+    description_names = ['first']
 
     descriptions = []
 
+    # prompt the user for the descriptions
     for name in description_names:
         descriptions.append(input(f'Enter the {name} description:\n'))
 
-    answers = calculate_answers(descriptions, data)
+    answers = calculate_answers(descriptions)
 
     print(answers)
 
-def calculate_answers(descriptions: Tuple[int], data: Dict[str, List[Tuple[int, int]]]) -> Tuple[Tuple[int]]:
+def calculate_answers(descriptions: Tuple[int]) -> Tuple[Tuple[int]]:
     NUMBER_OF_QUESTIONS = 5
 
     answers = []
 
+    # calculate the answers for each of the descriptions
     for description in descriptions:
         description = format_description(description)
         answers.append(calculate_paragraph_ratings(description, data, NUMBER_OF_QUESTIONS))
     
-    # make it so then in answers[n][m], n is the question and m is the person 
+    # make it so then the tuple that we return is tuple[n][m], where n is the question and m is the person 
     return tuple(zip(*answers[::]))
 
 def format_description(description: str) -> List[str]:
@@ -104,7 +105,7 @@ def interpret_data() -> Dict[str, List[Tuple[int, int]]]:
 
 def calculate_sentence_rating(summation: int, frequency: int) -> int:
     ratio = summation / frequency # in python we don't have to worry about integer division lol
-    if ratio >= 4:
+    if ratio > 4:
         return 5
     if ratio == 4:
         return 4
@@ -129,14 +130,18 @@ def calculate_paragraph_ratings(description: List[str], data: Dict[str, List[Tup
                 continue
             
             rating_sum = paragraph_ratings[question_num] + rating
+            print(rating_sum)
 
-            # we only need to change the paragraph rating if the sentence ratings are 1 and 3 or 3 and 5
-            if rating_sum == 8:
+            # change the paragraph rating to the correct thing
+            if 6 < rating_sum < 10:
                 paragraph_ratings[question_num] = 4
-            elif rating_sum == 4:
+            elif 2 < rating_sum < 6:
                 paragraph_ratings[question_num] = 2
     
     return paragraph_ratings
+
+# interpret and organize the data
+data = interpret_data()
 
 if __name__ == '__main__':
     main()
