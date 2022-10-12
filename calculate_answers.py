@@ -95,6 +95,3 @@ def calculate_paragraph_ratings(description: List[str], NUMBER_OF_QUESTIONS: int
 
 # interpret and organize the data
 data = interpret_data()
-
-if __name__ == '__main__':
-    main()
