@@ -57,11 +57,21 @@ def main():
     # print the description
     for i in range(len(answers)):
         for j in range(len(answers[0])):
+            # print a comma and a space if there is another element to print
             if j < len(answers[0]) - 1:
                 endstr = ', '
             else:
                 endstr = ''
-            print(answers[i][j], end=endstr)
+            
+            # print a question mark if there was not enough data in the description to determine the rating
+            if answers[i][j] == 0:
+                thing_to_print = "idk"
+            else:
+                thing_to_print = str(answers[i][j])
+            
+            print(thing_to_print, end=endstr)
+        
+        # print a newline if there is another tuple to print
         if i < len(answers) - 1:
             print()
 
