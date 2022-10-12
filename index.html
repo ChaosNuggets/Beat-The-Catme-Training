@@ -2,20 +2,19 @@
 <html>
 <head>
     <title>Beat The Catme Training</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
     <h1>Beat The Catme Training</h1>
-    <p>Enter the descriptions below to get the answers!</p><br>
+    <p>Enter the descriptions below to get the answers! (Enter at least 1 description)</p><br>
 
-    <form action="answers.php" method="get">
+    <form action="answers.php" method="post">
         <label for="d1">First description: </label><br>
-        <textarea id="d1" rows="4" cols="200"></textarea><br><br>
+        <textarea name="d1" rows="7" cols="100"></textarea><br><br>
         <label for="d2">Second description: </label><br>
-        <textarea id="d2" rows="4" cols="200"></textarea><br><br>
+        <textarea name="d2" rows="7" cols="100"></textarea><br><br>
         <label for="d3">Third description: </label><br>
-        <textarea id="d3" rows="4" cols="200"></textarea><br><br>
+        <textarea name="d3" rows="7" cols="100"></textarea><br><br>
         <input type="submit" value="Submit">
     </form>
 

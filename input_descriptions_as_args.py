@@ -30,11 +30,40 @@ is my own original work.
 ===============================================================================
 """
 
-# Write any import statements here (and delete this comment).
-
+import sys
+import calculate_answers
 
 def main():
-    print("hello")
+    # get the descriptions from the command line arguments
+    descriptions = sys.argv[1:]
+
+    # remove the blank strings
+    for argument in sys.argv[1:]:
+        if argument == '':
+            descriptions.remove(argument)
+
+    # check if the user entered at least 1 description
+    if len(descriptions) == 0:
+        print('Please enter at least 1 description')
+        return
+    
+    # check if the description is valid
+    try:
+        answers = calculate_answers.calculate_answers(descriptions)
+    except RuntimeError as error:
+        print(f'Error: {error}')
+        return
+
+    # print the description
+    for i in range(len(answers)):
+        for j in range(len(answers[0])):
+            if j < len(answers[0]) - 1:
+                endstr = ', '
+            else:
+                endstr = ''
+            print(answers[i][j], end=endstr)
+        if i < len(answers) - 1:
+            print()
 
 if __name__ == '__main__':
     main()

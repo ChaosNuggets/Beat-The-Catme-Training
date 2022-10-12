@@ -74,7 +74,7 @@ def calculate_paragraph_ratings(description: List[str], NUMBER_OF_QUESTIONS: int
     paragraph_ratings = [0] * NUMBER_OF_QUESTIONS
     for sentence in description:
         if sentence not in data:
-            raise RuntimeError(f'sentence: {sentence} could not found in the data')
+            raise RuntimeError(f'sentence "{sentence}" could not found in the data')
         for result in data[sentence]:
             # give the data names
             (question_num, rating) = result
