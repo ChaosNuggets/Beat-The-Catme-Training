@@ -38,7 +38,7 @@ def main():
 
     descriptions = []
 
-    # prompt the user for the descriptions
+    # Prompt the user for the descriptions
     for name in description_names:
         descriptions.append(input(f'Enter the {name} description:\n'))
 

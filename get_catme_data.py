@@ -72,16 +72,15 @@ def main():
 
     for i in range(TIMES_TO_RUN):
         current_test_failed = False
-        print(f'running: {i + 1} / {TIMES_TO_RUN}')
+        print(f'Running: {i + 1} / {TIMES_TO_RUN}')
         get_results(driver)
 
     write_results()
 
-    print(f'done! ({failed_tests} / {TIMES_TO_RUN} tests failed)')
+    print(f'Done! ({failed_tests} / {TIMES_TO_RUN} tests failed)')
 
 def get_results(driver) -> None:
     global current_test_failed
-    if current_test_failed: return
     navigate_to_questions(driver)
 
     # Fill out each of the questions
@@ -95,7 +94,6 @@ def get_results(driver) -> None:
 
 def navigate_to_questions(driver) -> None:
     global current_test_failed
-    if current_test_failed: return
     # Open the website
     driver.get('https://www.catme.org/login/survey_demo_team')
 
@@ -107,10 +105,11 @@ def navigate_to_questions(driver) -> None:
 
 def fill_out_questions(driver) -> None:
     global current_test_failed
-    if current_test_failed: return
     # Find and click a rating for each person
     person_1_button = find_element(driver, 'name', 'person0')
+    if current_test_failed: return
     person_2_button = find_element(driver, 'name', 'person1')
+    if current_test_failed: return
     person_3_button = find_element(driver, 'name', 'person2')
     if current_test_failed: return
 
@@ -120,41 +119,40 @@ def fill_out_questions(driver) -> None:
 
 def find_reasons_and_rating(driver, question: int) -> None:
     global current_test_failed, failed_tests
-    if current_test_failed: return
-    # the number of rows that we can choose
+    # The number of rows that we can choose
     NUMBER_OF_ROWS = 5
 
-    # the people we still haven't found the correct answer for yet
+    # The people we still haven't found the correct answer for yet
     not_found_yet = [0, 1, 2]
 
-    # iterate through each row
+    # Iterate through each row
     for i in range(NUMBER_OF_ROWS):
-        # create a temporary not_found_yet because removing elements from the actual not_found_yet
-        # list while still in the for loop will cause weird stuff to happen
+        # Create a temporary not_found_yet because removing elements from the actual not_found_yet
+        # List while still in the for loop will cause weird stuff to happen
         temp_not_found_yet = not_found_yet.copy()
 
-        # get the row
+        # Get the row
         row = find_element(driver, By.XPATH, f'//section/div/table[{question + 1}]/tbody/tr[{i+5}]')
         if current_test_failed: return
 
-        # test if that row was the correct answer for any of them
+        # Test if that row was the correct answer for any of them
         for j in not_found_yet:
             
-            # test if the correct answer is in that row
+            # Test if the correct answer is in that row
             try:
                 reasons = row.find_element('id', f'info{j}{question + 1}').get_attribute('textContent')
             except NoSuchElementException:
                 continue
 
-            # do these if the correct answer is in that row
+            # Do these if the correct answer is in that row
             temp_not_found_yet.remove(j)
             reasons_list, rating = get_reasons_and_rating(reasons, i)
             record_reasons_and_rating(question, reasons_list, rating)
         
-        # make the changes
+        # Make the changes
         not_found_yet = temp_not_found_yet.copy()
 
-        # if we've found everything (the not_found_yet list is empty), then we can return
+        # If we've found everything (the not_found_yet list is empty), then we can return
         if not not_found_yet:
             return
     
@@ -163,47 +161,42 @@ def find_reasons_and_rating(driver, question: int) -> None:
     current_test_failed = True
 
 def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
-    global current_test_failed
-    if current_test_failed: return
-    # calculate the rating based on the current row
+    # Calculate the rating based on the current row
     rating = 5 - row_num
 
-    # remove the unnecessary content from the text
+    # Remove the unnecessary content from the text
     reasons = reasons.replace("The behaviors described in the phrase '", "")
     reasons = reasons.replace(".' should have resulted in the rating described for this factor.", "")
 
-    # split the text into its sentences
+    # Split the text into its sentences
     reasons_list = reasons.split('.')
     for i in range(len(reasons_list)):
 
-        # remove unnecessary whitespace
+        # Remove unnecessary whitespace
         reasons_list[i] = reasons_list[i].strip()
     
     return reasons_list, rating
 
 def record_reasons_and_rating(question: int, reasons_list: List[str], rating: int) -> None:
-    global current_test_failed
-    if current_test_failed: return
-    # copy the corresponding dictionary (I hate that I have to do this stupidity)
+    # Copy the corresponding dictionary (I hate that I have to do this stupidity)
     question_results = results[question].copy()
 
-    # iterate through each reason in reasons
+    # Iterate through each reason in reasons
     for reason in reasons_list:
 
-        # add the reason to the results dictionary
+        # Add the reason to the results dictionary
         if reason in question_results:
             question_results[reason][0] += rating
             question_results[reason][1] += 1
         else:
             question_results[reason] = [rating, 1]
     
-    # add the changed dictionary back into results
+    # Add the changed dictionary back into results
     results[question] = question_results
 
 def go_to_next_question(driver) -> None:
     global current_test_failed
-    if current_test_failed: return
-    # find and click the next button
+    # Find and click the next button
     next_button = find_element(driver, By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
     if current_test_failed: return
 
@@ -215,7 +208,7 @@ def find_element(driver, find_method, method_value: str):
     try:
         return driver.find_element(find_method, method_value)
     except NoSuchElementException:
-        # try again lmao
+        # Try again lmao
         print('ran into NoSuchElementException, moving on to next test')
         failed_tests += 1
         current_test_failed = True

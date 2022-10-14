@@ -42,10 +42,10 @@ from selenium.webdriver.common.by import By
 # Helps when using try catch when trying to find an element
 from selenium.common.exceptions import NoSuchElementException
 
-# import for pausing
+# Import for pausing
 import time
 
-# import for type hinting
+# Import for type hinting
 from typing import List
 
 # Import our algorithm for calculating the correct answers
@@ -90,7 +90,7 @@ def navigate_to_descriptions(driver) -> None:
 def get_descriptions(driver) -> List[str]:
     NUMBER_OF_DESCRIPTIONS = 3
 
-    # get the descriptions and fill the list
+    # Get the descriptions and fill the list
     descriptions = []
     for i in range(NUMBER_OF_DESCRIPTIONS):
         description = find_element(driver, By.XPATH, f'//section/dl/dd[{i + 1}]').get_attribute('textContent')
@@ -117,14 +117,14 @@ def fill_out_questions(driver, answers: List[int]) -> None:
         person_i_button.click()
 
 def go_to_next_question(driver) -> None:
-    # find and click the next button
+    # Find and click the next button
     next_button = find_element(driver, By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
     if current_test_failed: return
 
     next_button.click()
 
 def get_score(driver) -> int:
-    # find the header with the score
+    # Find the header with the score
     header = find_element(driver, 'id', 'page_title_h1_lbl').text
     return int(header.replace('Practice Scenario Results: Score ', '').replace(' of 30.', ''))
 
@@ -134,7 +134,7 @@ def find_element(driver, find_method, method_value: str):
     try:
         return driver.find_element(find_method, method_value)
     except NoSuchElementException:
-        # try again lmao
+        # Move to next test
         print('ran into NoSuchElementException, moving on to next test')
         failed_tests += 1
         current_test_failed = True
