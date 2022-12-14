@@ -81,9 +81,16 @@ def test_algorithm(driver) -> None:
         fill_out_questions(driver, answers[i])
         go_to_next_question(driver)
     
-    if get_score(driver) < 30:
-        print('we made a mistake somewhere')
-        time.sleep(9999999)
+    try:
+        if get_score(driver) < 30:
+            print('we made a mistake somewhere')
+            time.sleep(9999999)
+    except ValueError:
+        # Move to next test
+        print('ran into ValueError, moving on to next test')
+        failed_tests += 1
+        current_test_failed = True
+    
 
 # Go to the first page of the Catme survey (which lists the descriptions)
 def navigate_to_descriptions(driver) -> None:
