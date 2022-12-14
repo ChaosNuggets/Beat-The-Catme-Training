@@ -3,8 +3,8 @@
 ENGR 13300 Fall 2022
 
 Program Description
-    Prompts the user for the 3 descriptions and then generates the correct
-    answers for each of them
+    Prompts the user for the 3 descriptions and then prints the correct
+    answers
 
 Assignment Information
     Assignment:     Individual project

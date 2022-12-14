@@ -49,7 +49,7 @@ def calculate_answers(descriptions: Tuple[int]) -> Tuple[Tuple[int]]:
     # Make it so then the tuple that we return is tuple[n][m], where n is the question and m is the person 
     return tuple(zip(*answers[::]))
 
-# Splits a description into a list of sentences
+# Splits a description into a list of sentences and returns that list
 def format_description(description: str) -> List[str]:
     # Split the description into sentences
     description = description.strip('. ').lower().split('.')
@@ -63,7 +63,7 @@ def format_description(description: str) -> List[str]:
 # Interprets the data in results.csv.
 # Returns a dictionary with
 # the keys being the sentences
-# the indexes of the values are how we store the different tuples (if the sentence affects more than one question we need to have more than one tuple)
+# the values being a list of tuples (if the sentence affects more than one question, we need to have more than one tuple)
 # the first index of the tuple being the question number
 # the second index of the tuple being what rating the sentence corresponds to
 def interpret_data() -> Dict[str, List[Tuple[int, int]]]:

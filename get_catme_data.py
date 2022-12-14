@@ -3,7 +3,7 @@
 ENGR 13300 Fall 2022
 
 Program Description
-    Gets a bunch of data from the catme website for reverse engineering
+    Gets a bunch of data from the Catme website for reverse engineering
 
 Assignment Information
     Assignment:     Individual project
@@ -79,7 +79,7 @@ def main():
 
     print(f'Done! ({failed_tests} / {TIMES_TO_RUN} tests failed)')
 
-# Gets fills out one catme survey and gets its data
+# Fills out one Catme survey and gets its data
 def get_results(driver) -> None:
     global current_test_failed
     navigate_to_questions(driver)
@@ -164,7 +164,8 @@ def find_reasons_and_rating(driver, question: int) -> None:
     failed_tests += 1
     current_test_failed = True
 
-# Returns a list of the reasons of why that choice should have been the correct answer
+# Returns a list of the reasons why that choice should have been the correct answer
+# (Catme tells you what sentences should've affected your answer for each question)
 def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
     # Calculate the rating based on the current row
     rating = 5 - row_num
@@ -200,7 +201,7 @@ def record_reasons_and_rating(question: int, reasons_list: List[str], rating: in
     # Add the changed dictionary back into results
     results[question] = question_results
 
-# Presses the next button after arbitrary choices have been picked to go to the next question.
+# Presses the next button to go to the next question.
 def go_to_next_question(driver) -> None:
     global current_test_failed
     # Find and click the next button
@@ -210,7 +211,7 @@ def go_to_next_question(driver) -> None:
     next_button.click()
 
 # A version of driver.find_element that will signal the program to move on to the
-# next test instead of halting (now that I think about it I could've just surrounded)
+# next test instead of throwing an error (now that I think about it I could've just surrounded)
 # lines 74 - 76 with try catch and it would've been so much easier)
 def find_element(driver, find_method, method_value: str):
     global current_test_failed, failed_tests
@@ -223,7 +224,7 @@ def find_element(driver, find_method, method_value: str):
         failed_tests += 1
         current_test_failed = True
 
-# Saves the results to a file
+# Saves the results to results.csv
 def write_results() -> None:
     with open('results.csv', 'w') as file:
         file.write('Question Number,Reason,Sum,Frequency\n')

@@ -4,7 +4,7 @@ ENGR 13300 Fall 2022
 
 Program Description
     Tests if calculate_answers.py is actually correct by filling out
-    TIMES_TO_RUN catme surveys
+    TIMES_TO_RUN Catme surveys
 
 Assignment Information
     Assignment:     Individual project
@@ -67,7 +67,7 @@ def main():
         print(f'running: {i + 1} / {TIMES_TO_RUN}')
         test_algorithm(driver)
 
-# Fills out the correct answers for 1 catme survey
+# Fills out the correct answers for 1 Catme survey
 def test_algorithm(driver) -> None:
     global current_test_failed
     current_test_failed = False
@@ -85,7 +85,7 @@ def test_algorithm(driver) -> None:
         print('we made a mistake somewhere')
         time.sleep(9999999)
 
-# Go to the first page of the catme survey (which list the descriptions)
+# Go to the first page of the Catme survey (which lists the descriptions)
 def navigate_to_descriptions(driver) -> None:
     # Open the website
     driver.get('https://www.catme.org/login/survey_demo_team')
@@ -122,7 +122,7 @@ def fill_out_questions(driver, answers: List[int]) -> None:
 
         person_i_button.click()
 
-# Clicks the next button to go to the next question in the catme survey
+# Clicks the next button to go to the next question in the Catme survey
 def go_to_next_question(driver) -> None:
     # Find and click the next button
     next_button = find_element(driver, By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
@@ -137,7 +137,7 @@ def get_score(driver) -> int:
     return int(header.replace('Practice Scenario Results: Score ', '').replace(' of 30.', ''))
 
 # A version of driver.find_element that will signal the program to move on to the
-# next test instead of halting (now that I think about it I could've just surrounded)
+# next test instead of throwing an error (now that I think about it I could've just surrounded)
 # lines 67 - 68 with try catch and it would've been so much easier)
 def find_element(driver, find_method, method_value: str):
     global current_test_failed, failed_tests
