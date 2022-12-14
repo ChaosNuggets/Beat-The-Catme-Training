@@ -1,9 +1,41 @@
+"""
+===============================================================================
+ENGR 13300 Fall 2022
+
+Program Description
+    Has a bunch of functions that help calculate what the correct answers are
+
+Assignment Information
+    Assignment:     Individual project
+    Author:         Stanley So, sos@purdue.edu
+    Team ID:        LC4 - 12
+
+Contributor:    Name, login@purdue [repeat for each]
+    My contributor(s) helped me:
+    [ ] understand the assignment expectations without
+        telling me how they will approach it.
+    [ ] understand different ways to think about a solution
+        without helping me plan my solution.
+    [ ] think through the meaning of a specific error or
+        bug present in my code without looking at my code.
+    Note that if you helped somebody else with their code, you
+    have to list that person as a contributor here as well.
+    
+ACADEMIC INTEGRITY STATEMENT
+I have not used source code obtained from any other unauthorized
+source, either modified or unmodified. Neither have I provided
+access to my code to another. The project I am submitting
+is my own original work.
+===============================================================================
+"""
+
 # Import for type hinting
 from typing import List, Dict, Tuple
 
 # Import for reading csv file easier
 import csv
 
+# Takes in a list of descriptions as the argument and returns the answers
 def calculate_answers(descriptions: Tuple[int]) -> Tuple[Tuple[int]]:
     NUMBER_OF_QUESTIONS = 5
 
@@ -17,6 +49,7 @@ def calculate_answers(descriptions: Tuple[int]) -> Tuple[Tuple[int]]:
     # Make it so then the tuple that we return is tuple[n][m], where n is the question and m is the person 
     return tuple(zip(*answers[::]))
 
+# Splits a description into a list of sentences
 def format_description(description: str) -> List[str]:
     # Split the description into sentences
     description = description.strip('. ').lower().split('.')
@@ -27,6 +60,7 @@ def format_description(description: str) -> List[str]:
     
     return description
 
+# Interprets the data in results.csv.
 # Returns a dictionary with
 # the keys being the sentences
 # the indexes of the values are how we store the different tuples (if the sentence affects more than one question we need to have more than one tuple)
@@ -57,6 +91,8 @@ def interpret_data() -> Dict[str, List[Tuple[int, int]]]:
     
     return data
 
+# Given the sum of all the ratings and the amount of times that sentence appeared in the surveys,
+# return the rating for that sentence.
 def calculate_sentence_rating(summation: int, frequency: int) -> int:
     ratio = summation / frequency # In python we don't have to worry about integer division lol
     if ratio > 4:
@@ -69,6 +105,7 @@ def calculate_sentence_rating(summation: int, frequency: int) -> int:
         return 2
     return 1
 
+# Given one description, calculate the answer to each question
 def calculate_paragraph_ratings(description: List[str], NUMBER_OF_QUESTIONS: int) -> List[int]:
     # The answer for each question from 1-5
     paragraph_ratings = [0] * NUMBER_OF_QUESTIONS

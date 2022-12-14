@@ -3,7 +3,8 @@
 ENGR 13300 Fall 2022
 
 Program Description
-    Tests if calculate_answers.py is actually correct
+    Tests if calculate_answers.py is actually correct by filling out
+    TIMES_TO_RUN catme surveys
 
 Assignment Information
     Assignment:     Individual project
@@ -57,7 +58,7 @@ failed_tests = 0
 NUMBER_OF_QUESTIONS = 5
 
 def main():
-    TIMES_TO_RUN = 100
+    TIMES_TO_RUN = 10000
 
     # Using Chrome to access web
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -66,6 +67,7 @@ def main():
         print(f'running: {i + 1} / {TIMES_TO_RUN}')
         test_algorithm(driver)
 
+# Fills out the correct answers for 1 catme survey
 def test_algorithm(driver) -> None:
     global current_test_failed
     current_test_failed = False
@@ -83,10 +85,12 @@ def test_algorithm(driver) -> None:
         print('we made a mistake somewhere')
         time.sleep(9999999)
 
+# Go to the first page of the catme survey (which list the descriptions)
 def navigate_to_descriptions(driver) -> None:
     # Open the website
     driver.get('https://www.catme.org/login/survey_demo_team')
 
+# Return the descriptions for each person
 def get_descriptions(driver) -> List[str]:
     NUMBER_OF_DESCRIPTIONS = 3
 
@@ -99,6 +103,7 @@ def get_descriptions(driver) -> List[str]:
     
     return descriptions
 
+# Presses the "complete activity" button to get to the questions
 def navigate_to_questions(driver) -> None:
     global current_test_failed
     # Find and click on list of courses
@@ -107,6 +112,7 @@ def navigate_to_questions(driver) -> None:
 
     complete_activity_button.click()
 
+# Given the correct answers as a parameter, it chooses the correct answer for each person
 def fill_out_questions(driver, answers: List[int]) -> None:
     NUMBER_OF_ROWS = 5
     # Find and click a rating for each person
@@ -116,6 +122,7 @@ def fill_out_questions(driver, answers: List[int]) -> None:
 
         person_i_button.click()
 
+# Clicks the next button to go to the next question in the catme survey
 def go_to_next_question(driver) -> None:
     # Find and click the next button
     next_button = find_element(driver, By.XPATH, '//form[2]/section/table/tbody/tr/td[3]/input')
@@ -123,11 +130,15 @@ def go_to_next_question(driver) -> None:
 
     next_button.click()
 
+# Reads the text of the results page to see what score out of 30 we got
 def get_score(driver) -> int:
     # Find the header with the score
     header = find_element(driver, 'id', 'page_title_h1_lbl').text
     return int(header.replace('Practice Scenario Results: Score ', '').replace(' of 30.', ''))
 
+# A version of driver.find_element that will signal the program to move on to the
+# next test instead of halting (now that I think about it I could've just surrounded)
+# lines 67 - 68 with try catch and it would've been so much easier)
 def find_element(driver, find_method, method_value: str):
     global current_test_failed, failed_tests
     if current_test_failed: return

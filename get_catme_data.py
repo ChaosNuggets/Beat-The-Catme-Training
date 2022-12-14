@@ -79,19 +79,21 @@ def main():
 
     print(f'Done! ({failed_tests} / {TIMES_TO_RUN} tests failed)')
 
+# Gets fills out one catme survey and gets its data
 def get_results(driver) -> None:
     global current_test_failed
     navigate_to_questions(driver)
 
     # Fill out each of the questions
     for i in range(NUMBER_OF_QUESTIONS):
-        fill_out_questions(driver)
+        fill_out_question(driver)
         go_to_next_question(driver)
     
     # Get the results
     for i in range(NUMBER_OF_QUESTIONS):
         find_reasons_and_rating(driver, i)
 
+# Presses the "complete activity" button to get to the questions
 def navigate_to_questions(driver) -> None:
     global current_test_failed
     # Open the website
@@ -103,7 +105,8 @@ def navigate_to_questions(driver) -> None:
 
     complete_activity_button.click()
 
-def fill_out_questions(driver) -> None:
+# Chooses an arbitrary answer for each person
+def fill_out_question(driver) -> None:
     global current_test_failed
     # Find and click a rating for each person
     person_1_button = find_element(driver, 'name', 'person0')
@@ -117,6 +120,7 @@ def fill_out_questions(driver) -> None:
     person_2_button.click()
     person_3_button.click()
 
+# Finds out what the correct answer was for each person
 def find_reasons_and_rating(driver, question: int) -> None:
     global current_test_failed, failed_tests
     # The number of rows that we can choose
@@ -160,6 +164,7 @@ def find_reasons_and_rating(driver, question: int) -> None:
     failed_tests += 1
     current_test_failed = True
 
+# Returns a list of the reasons of why that choice should have been the correct answer
 def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
     # Calculate the rating based on the current row
     rating = 5 - row_num
@@ -177,6 +182,7 @@ def get_reasons_and_rating(reasons: str, row_num: int) -> Tuple[List[str], int]:
     
     return reasons_list, rating
 
+# Saves the results into the results list (a global variable defined near the top of this program)
 def record_reasons_and_rating(question: int, reasons_list: List[str], rating: int) -> None:
     # Copy the corresponding dictionary (I hate that I have to do this stupidity)
     question_results = results[question].copy()
@@ -194,6 +200,7 @@ def record_reasons_and_rating(question: int, reasons_list: List[str], rating: in
     # Add the changed dictionary back into results
     results[question] = question_results
 
+# Presses the next button after arbitrary choices have been picked to go to the next question.
 def go_to_next_question(driver) -> None:
     global current_test_failed
     # Find and click the next button
@@ -202,17 +209,21 @@ def go_to_next_question(driver) -> None:
 
     next_button.click()
 
+# A version of driver.find_element that will signal the program to move on to the
+# next test instead of halting (now that I think about it I could've just surrounded)
+# lines 74 - 76 with try catch and it would've been so much easier)
 def find_element(driver, find_method, method_value: str):
     global current_test_failed, failed_tests
     if current_test_failed: return
     try:
         return driver.find_element(find_method, method_value)
     except NoSuchElementException:
-        # Try again lmao
+        # Print the error and move on
         print('ran into NoSuchElementException, moving on to next test')
         failed_tests += 1
         current_test_failed = True
 
+# Saves the results to a file
 def write_results() -> None:
     with open('results.csv', 'w') as file:
         file.write('Question Number,Reason,Sum,Frequency\n')
